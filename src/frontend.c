@@ -50,16 +50,21 @@ void cleanSymbols(int y, int x, int size_y, int size_x)
 // Выводит информацию о игре
 void ouputInfoGame(TetGame_t *game)
 {
-    mvprintw(SHIFT_FIELD_Y + 7, SHIFT_FIELD_X + 20, "%d", game->counterIter);
-    mvprintw(SHIFT_FIELD_Y + 7, SHIFT_FIELD_X + 12, "%s", "counter");
+    mvprintw(SHIFT_FIELD_Y + 7, SHIFT_FIELD_X + 12, "%s", "speed:");
+    mvprintw(SHIFT_FIELD_Y + 7, SHIFT_FIELD_X + 20, "%d", game->gameInfo->speed);
 
-    mvprintw(SHIFT_FIELD_Y + 8, SHIFT_FIELD_X + 20, "%d", game->score);
-    mvprintw(SHIFT_FIELD_Y + 8, SHIFT_FIELD_X + 12, "%s", "scorer");
+    mvprintw(SHIFT_FIELD_Y + 9, SHIFT_FIELD_X + 12, "%s", "curr score:");
+    mvprintw(SHIFT_FIELD_Y + 9, SHIFT_FIELD_X + 25, "%d", game->gameInfo->score);
+
+    mvprintw(SHIFT_FIELD_Y + 10, SHIFT_FIELD_X + 12, "%s", "high score:");
+    mvprintw(SHIFT_FIELD_Y + 10, SHIFT_FIELD_X + 25, "%d", game->gameInfo->high_score);
 }
 
 // Вывод всех объектов игры
 void frontend(TetGame_t *game)
 {
+
+    // box(stdscr, 2, 2);
     outputField(game->field);
     outputFigure(game->figure, '2', 0, 0);
 

@@ -13,9 +13,7 @@ TetFigure_t *createFigure()
     {
         figure->blocks[row] = (int *)calloc(FIGURE_SIZE, sizeof(int));
     }
-
     figure->y = 0;
-
     return figure;
 }
 
@@ -67,11 +65,7 @@ void freeField(TetField_t *field)
 TetGame_t *createGame()
 {
     TetGame_t *game = (TetGame_t *)malloc(sizeof(TetGame_t));
-    game->figure = createRandomFigure();
-    game->figureNext = createRandomFigure();
-    game->field = createField();
-    game->action = 'w';
-    game->counterIter = 1;
+    game->gameInfo = (GameInfo_t *)malloc(sizeof(GameInfo_t));
 
     return game;
 }
@@ -146,4 +140,124 @@ void updateFigure(TetGame_t *game)
     game->figureNext = createRandomFigure();
 }
 
+// Проверяет находится ли блок в пределах игрового поля
+int checkBoundaries(int row, int col, int fy, int fx)
+{
+    int result = 1;
+    if ((row + fy > HEIGHT_FIELD || row + fy < 0) ||
+        (col + fx > WIDTH_FIELD - 1 || col + fx < 0))
+        result = 0;
+    return result;
+}
+
+// Установить фигуру на поле
+void placeFigure(TetGame_t *game)
+{
+    int fy = game->figure->y;
+    int fx = game->figure->x;
+
+    for (int row = 0; row < FIGURE_SIZE; row++)
+    {
+        for (int col = 0; col < FIGURE_SIZE; col++)
+        {
+            int fgr = game->figure->blocks[row][col];
+            if (fgr != 0)
+            {
+                game->field->blocks[fy + row][fx + col] = fgr;
+            }
+        }
+    }
+}
+
+// Проверяет заполнена ли линия под индексом row
+int lineIsFill(TetField_t *field, int row)
+{
+    int result = 1;
+    for (int col = 0; col < WIDTH_FIELD; col++)
+    {
+        int block = field->blocks[row][col];
+        if (block == 0)
+            result = 0;
+    }
+    return result;
+}
+
+// Удаляет строку
+void dropLine(TetField_t *field, int row)
+{
+    if (row == HEIGHT_FIELD)
+    {
+        for (int col = 0; col < WIDTH_FIELD; col++)
+            field->blocks[row][col] = 0;
+    }
+    else
+    {
+        for (int i = row; i > 0; i--)
+        {
+            for (int col = 0; col < WIDTH_FIELD; col++)
+            {
+                field->blocks[i][col] = field->blocks[i - 1][col];
+            }
+        }
+    }
+}
+
+// Удаляет строки и подсчитывает результат
+int eraseLines(TetGame_t *game)
+{
+    int counter = 0;
+    for (int row = HEIGHT_FIELD - 1; row >= 0; row--)
+    {
+        while (lineIsFill(game->field, row))
+        {
+            dropLine(game->field, row);
+            counter++;
+        }
+    }
+    return counter;
+}
+
+// Проверка столкновения фигуры
+int collisionFigure(TetGame_t *game)
+{
+    int result = 0;
+
+    int fx = game->figure->x;
+    int fy = game->figure->y;
+
+    int **figure = game->figure->blocks;
+    int **field = game->field->blocks;
+
+    for (int row = 0; row < FIGURE_SIZE; row++)
+    {
+        for (int col = 0; col < FIGURE_SIZE; col++)
+        {
+            int fgr = figure[row][col];
+
+            if (fgr == 1)
+            {
+                if (checkBoundaries(row, col, fy + 1, fx))
+                {
+                    int fld = field[fy + row][fx + col];
+
+                    if (fgr != 0 && fld != 0)
+                    {
+                        result = 1;
+                        break;
+                    }
+                }
+
+                if (!checkBoundaries(row, col, fy + 1, fx))
+                {
+                    result = 1;
+                    break;
+                }
+            }
+        }
+        if (result)
+            break;
+    }
+
+    return result;
+}
 #endif
