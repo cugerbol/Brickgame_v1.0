@@ -5,13 +5,16 @@
 #include "ncurses.h"
 #include "fsm.h"
 
-void userInput(UserAction_t action, bool hold);
+#include <ncurses.h>
+
+void userAction(TetGame_t *game);
 
 int main()
 {
     initscr();
     keypad(stdscr, TRUE);
     nodelay(stdscr, TRUE);
+    raw();
     noecho();
     cbreak();
     curs_set(0);
@@ -19,13 +22,15 @@ int main()
     TetGame_t *game = createGame();
     initGame(game);
 
-    char ch = 'a';
-    while (game->action != 'q')
+    while (game->gameStatus != Terminate)
     {
+        userAction(game);
 
-        game->action = getch();
-        updateCurrentState(game);
-        frontend(game);
+        if (game->gameStatus != Pause)
+        {
+            updateCurrentState(game);
+            frontend(game);
+        }
         usleep(2000);
 
         if (game->gameStatus == Terminate)
@@ -35,26 +40,34 @@ int main()
     return 0;
 }
 
-// // KEY_DOWN, KEY_UP, KEY_LEFT, KEY_RIGHT
-
-// void userInput(UserAction_t action, bool hold)
-// {
-//     char ch = getch();
-//     switch (ch)
-//     {
-//     case KEY_DOWN:
-//         break;
-
-//     case KEY_UP:
-//         break;
-
-//     case KEY_LEFT:
-//         break;
-
-//     case KEY_RIGHT:
-//         break;
-
-//     default:
-//         break;
-//     }
-// }
+void userAction(TetGame_t *game)
+{
+    int ch = getch();
+    switch (ch)
+    {
+    case KEY_UP:
+        game->action = Up;
+        break;
+    case KEY_DOWN:
+        game->action = Down;
+        break;
+    case KEY_LEFT:
+        game->action = Left;
+        break;
+    case KEY_RIGHT:
+        game->action = Right;
+        break;
+    case 'q':
+        game->gameStatus = Terminate;
+        break;
+    case 'p':
+        if (game->gameStatus == Pause)
+            game->gameStatus = Start;
+        else
+            game->gameStatus = Pause;
+        break;
+    default:
+        game->action = Action;
+        break;
+    }
+}
