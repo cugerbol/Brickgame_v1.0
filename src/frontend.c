@@ -10,7 +10,6 @@ void outputFigure(TetFigure_t *figure, char symb, int color, int shift_y, int sh
 {
     for (int row = 0; row < FIGURE_SIZE; row++)
     {
-        int index = 0;
         for (int col = 0; col < FIGURE_SIZE; col++)
         {
             int fy = figure->y + row + SHIFT_FIELD_Y + shift_y;
@@ -24,8 +23,6 @@ void outputFigure(TetFigure_t *figure, char symb, int color, int shift_y, int sh
                     mvprintw(fy, fx, "%c", symb);
                     attroff(COLOR_PAIR(color));
                 }
-
-                index++;
             }
         }
     }
@@ -44,15 +41,14 @@ void outputField(TetField_t *field, int symb)
                 {
                     attron(COLOR_PAIR(4));
                     mvprintw(row + SHIFT_FIELD_Y, col + SHIFT_FIELD_X, "%c", ' ');
-
                     attroff(COLOR_PAIR(4));
                 }
 
                 else
                 {
-                    attron(COLOR_PAIR(1));
+                    attron(COLOR_PAIR(3));
                     mvprintw(row + SHIFT_FIELD_Y, col + SHIFT_FIELD_X, "%c", ' ');
-                    attroff(COLOR_PAIR(1));
+                    attroff(COLOR_PAIR(3));
                 }
             }
         }
@@ -62,7 +58,6 @@ void outputField(TetField_t *field, int symb)
 // Очистить все символы в координатах
 void cleanSymbols(int y, int x, int size_y, int size_x)
 {
-
     for (int row = 0; row < size_y; row++)
     {
         for (int col = 0; col <= size_y; col++)
