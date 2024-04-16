@@ -45,6 +45,18 @@ void calculateTet(TetGame_t *game)
                 moveFigureRight(game->figure);
             break;
         }
+        case Up:
+        {
+
+            rotateFigure(game->figure);
+            if (collisionFigure(game))
+
+                for (int i = 0; i < 3; i++)
+                {
+                    rotateFigure(game->figure);
+                }
+            break;
+        }
         case Down:
         {
             moveFigureDown(game->figure);

@@ -36,6 +36,9 @@ void moveFigureLeft(TetFigure_t *figure);
 // Движение фигуры по X вправо
 void moveFigureRight(TetFigure_t *figure);
 
+// Поворот фигуры
+void rotateFigure(TetFigure_t *figure);
+
 // Выкинуть новую фигуру
 void updateFigure(TetGame_t *game);
 

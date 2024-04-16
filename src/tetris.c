@@ -34,7 +34,7 @@ int main()
     TetGame_t *game = createGame();
     initGame(game);
 
-    while (game->gameStatus != Terminate)
+    while (1) //(game->gameStatus != 100)
     {
         userAction(game);
 
@@ -46,7 +46,10 @@ int main()
         usleep(2000);
 
         if (game->gameStatus == Terminate)
+        {
+            usleep(2000000); // Временно
             break;
+        }
     }
     endwin();
     return 0;

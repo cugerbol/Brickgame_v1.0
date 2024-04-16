@@ -7,7 +7,7 @@
 void outputFigure(TetFigure_t *figure, char symb, int color, int shift_y, int shift_x);
 
 // Вывести на экран поле
-void outputField(TetField_t *field, int symb);
+void outputField(TetField_t *field);
 
 // Очистить все символы в координатах
 void cleanSymbols(int y, int x, int size_y, int size_x);

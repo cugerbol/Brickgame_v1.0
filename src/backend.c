@@ -132,6 +132,25 @@ void moveFigureRight(TetFigure_t *figure)
     figure->x++;
 }
 
+// Поворот фигуры
+void rotateFigure(TetFigure_t *figure)
+{
+    TetFigure_t *figureTmp = createFigure();
+    for (int row = 0; row < FIGURE_SIZE; row++)
+    {
+        for (int col = 0; col < FIGURE_SIZE; col++)
+        {
+            figureTmp->blocks[col][row] = figure->blocks[row][FIGURE_SIZE - col - 1];
+        }
+    }
+    for (int row = 0; row < FIGURE_SIZE; row++)
+    {
+        free(figure->blocks[row]);
+    }
+    figure->blocks = figureTmp->blocks;
+    free(figureTmp);
+}
+
 // Выкинуть новую фигуру
 void updateFigure(TetGame_t *game)
 {
@@ -257,7 +276,6 @@ int collisionFigure(TetGame_t *game)
         if (result)
             break;
     }
-
     return result;
 }
 #endif
