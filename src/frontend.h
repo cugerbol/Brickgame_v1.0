@@ -20,7 +20,7 @@ typedef struct TetWindows_t
 
 } TetWindows_t;
 
-// Вывести фигуру на поле с учетом смещения по оси X и Y
+// Вывести фигуру на поле
 void outputFigure(TetFigure_t *figure, WINDOW *win);
 
 // Вывести на экран поле
@@ -40,6 +40,9 @@ TetWindows_t *createWindows();
 
 // Освободить память окон
 void freeWindows(TetWindows_t *winTet);
+
+// Выводит GAME OVER
+void outpuGameOver(WINDOW *win, TetGame_t *game);
 
 // Вывод всех объектов игры
 void frontend(TetGame_t *game, TetWindows_t *winTet);

@@ -9,6 +9,8 @@
 
 void userAction(TetGame_t *game);
 
+// https://www.opennet.ru/docs/RUS/lpg/node8.html
+
 int main()
 {
     srand((unsigned)time(NULL));
@@ -48,15 +50,9 @@ int main()
         if (game->gameStatus != Pause)
         {
             updateCurrentState(game);
-            frontend(game, winTet);
         }
         usleep(2000);
-
-        if (game->gameStatus == Terminate)
-        {
-            usleep(2000000); // Временно
-            break;
-        }
+        frontend(game, winTet);
     }
     endwin();
     return 0;
@@ -84,14 +80,29 @@ void userAction(TetGame_t *game)
         break;
 
     case 'q':
-        game->gameStatus = Terminate;
+        if (game->gameStatus == Terminate)
+            game->gameStatus = Terminate;
+        else
+            game->gameStatus = Terminate;
         break;
 
     case 'p':
         if (game->gameStatus == Pause)
             game->gameStatus = Start;
-        else
+        else if ((game->gameStatus != Terminate))
             game->gameStatus = Pause;
+        break;
+
+    case '+':
+    case '=':
+        if (game->gameInfo->speed > 0 && game->gameInfo->speed < 10 && game->gameInfo->speed >= game->gameInfo->level)
+            game->gameInfo->speed++;
+        break;
+
+    case '_':
+    case '-':
+        if (game->gameInfo->speed > 1 && game->gameInfo->speed <= 10)
+            game->gameInfo->speed--;
         break;
 
     default:

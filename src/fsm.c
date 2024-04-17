@@ -9,7 +9,7 @@
 // Функция для просчета одной итерации
 void calculateTet(TetGame_t *game)
 {
-    if (game->counterIter == COUNT_ITERATION * 20 / game->gameInfo->speed)
+    if (game->counterIter >= COUNT_ITERATION * 15 / game->gameInfo->speed)
     {
         game->counterIter = 0;
         moveFigureDown(game->figure);
