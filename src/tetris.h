@@ -10,9 +10,9 @@
 #define HEIGHT_FIELD 20
 #define WIDTH_FIELD 10
 
-#define FIGURE_START_Y -5
-#define SHIFT_FIELD_X 5
-#define SHIFT_FIELD_Y 5
+#define FIGURE_START_Y 0
+#define SHIFT_FIELD_X 10
+#define SHIFT_FIELD_Y 10
 
 #define TET_PLAYER_RIGHT 'd'
 #define TET_PLAYER_LEFT 'a'

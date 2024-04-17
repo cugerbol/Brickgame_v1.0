@@ -86,7 +86,7 @@ void freeGame(TetGame_t *game)
 TetFigure_t *createRandomFigure()
 {
     TetFigure_t *figure = createFigure();
-    int rn = rand() % 2 + 1;
+    int rn = rand() % 7 + 1;
     char fileName[20];
     sprintf(fileName, "./templates/%d.txt", rn);
     FILE *file = fopen(fileName, "r");
@@ -156,6 +156,7 @@ void updateFigure(TetGame_t *game)
 {
     freeFigure(game->figure);
     game->figure = game->figureNext;
+    game->figure->y = -5;
     game->figureNext = createRandomFigure();
 }
 
@@ -163,7 +164,7 @@ void updateFigure(TetGame_t *game)
 int checkBoundaries(int row, int col, int fy, int fx)
 {
     int result = 1;
-    if ((row + fy > HEIGHT_FIELD || row + fy < 0) ||
+    if ((row + fy > HEIGHT_FIELD - 1 || row + fy < 0) ||
         (col + fx > WIDTH_FIELD - 1 || col + fx < 0))
         result = 0;
     return result;
@@ -180,7 +181,7 @@ void placeFigure(TetGame_t *game)
         for (int col = 0; col < FIGURE_SIZE; col++)
         {
             int fgr = game->figure->blocks[row][col];
-            if (fgr != 0)
+            if (fgr != 0 && fy + row >= 0)
             {
                 game->field->blocks[fy + row][fx + col] = fgr;
             }
@@ -255,18 +256,25 @@ int collisionFigure(TetGame_t *game)
 
             if (fgr == 1)
             {
-                if (checkBoundaries(row, col, fy + 1, fx))
+                if (fy + row < 0)
+                    continue;
+
+                else if (checkBoundaries(row, col, fy, fx))
                 {
                     int fld = field[fy + row][fx + col];
 
                     if (fgr != 0 && fld != 0)
                     {
                         result = 1;
+
+                        if (fy + row == 0)
+                            game->gameStatus = Terminate;
+
                         break;
                     }
                 }
 
-                if (!checkBoundaries(row, col, fy + 1, fx))
+                else if (!checkBoundaries(row, col, fy, fx))
                 {
                     result = 1;
                     break;

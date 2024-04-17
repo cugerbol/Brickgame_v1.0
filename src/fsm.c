@@ -9,7 +9,7 @@
 // Функция для просчета одной итерации
 void calculateTet(TetGame_t *game)
 {
-    if (game->counterIter == COUNT_ITERATION * game->gameInfo->speed)
+    if (game->counterIter == COUNT_ITERATION * 20 / game->gameInfo->speed)
     {
         game->counterIter = 0;
         moveFigureDown(game->figure);
@@ -21,10 +21,10 @@ void calculateTet(TetGame_t *game)
             game->gameInfo->score += eraseLines(game);
             updateFigure(game);
 
-            if (collisionFigure(game))
-            {
-                game->gameStatus = Terminate;
-            }
+            // if (collisionFigure(game))
+            // {
+            //     game->gameStatus = Terminate;
+            // }
         }
     }
     else
@@ -47,10 +47,8 @@ void calculateTet(TetGame_t *game)
         }
         case Up:
         {
-
             rotateFigure(game->figure);
             if (collisionFigure(game))
-
                 for (int i = 0; i < 3; i++)
                 {
                     rotateFigure(game->figure);

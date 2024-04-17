@@ -11,6 +11,8 @@ void userAction(TetGame_t *game);
 
 int main()
 {
+
+    srand((unsigned)time(NULL));
     initscr();
     keypad(stdscr, TRUE);
     nodelay(stdscr, TRUE);

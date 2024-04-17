@@ -12,12 +12,11 @@ void outputFigure(TetFigure_t *figure, char symb, int color, int shift_y, int sh
     {
         for (int col = 0; col < FIGURE_SIZE; col++)
         {
+
             int fy = figure->y + row + SHIFT_FIELD_Y + shift_y;
             int fx = figure->x + col + SHIFT_FIELD_X + shift_x;
 
-            // for (int i = 1; i <= 2; i++)
-            // {
-            if (figure->blocks[row][col] != 0)
+            if (fy >= SHIFT_FIELD_Y && figure->blocks[row][col] != 0)
             {
                 attron(COLOR_PAIR(color));
                 mvprintw(fy, 2 * fx, "%c", symb);
