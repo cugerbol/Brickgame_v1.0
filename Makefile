@@ -12,5 +12,12 @@ $(TARGET):
 	$(CC) $(CFLAGS) $(SRC) -o $(TARGET) -lncurses 
 
 
+build: clean $(TARGET)
+
+check: build
+	leaks -atExit -- ./tetris
+
 clean:
 	rm -f $(TARGET) $(OBJ)
+
+

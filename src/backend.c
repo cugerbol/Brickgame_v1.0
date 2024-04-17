@@ -26,10 +26,14 @@ void freeFigure(TetFigure_t *figure)
         {
             for (int row = 0; row < FIGURE_SIZE; row++)
             {
-                free(figure->blocks[row]);
+                if (figure->blocks[row])
+                {
+                    free(figure->blocks[row]);
+                }
             }
-            free(figure);
+            free(figure->blocks);
         }
+        free(figure);
     }
 }
 
@@ -52,12 +56,16 @@ void freeField(TetField_t *field)
     {
         if (field->blocks)
         {
-            for (int row = 0; row < FIGURE_SIZE; row++)
+            for (int row = 0; row < HEIGHT_FIELD; row++)
             {
-                free(field->blocks[row]);
+                if (field->blocks[row])
+                {
+                    free(field->blocks[row]);
+                }
             }
-            free(field);
+            free(field->blocks);
         }
+        free(field);
     }
 }
 
@@ -78,6 +86,7 @@ void freeGame(TetGame_t *game)
         freeFigure(game->figure);
         freeFigure(game->figureNext);
         freeField(game->field);
+        free(game->gameInfo);
         free(game);
     }
 }
@@ -146,10 +155,13 @@ void rotateFigure(TetFigure_t *figure)
     }
     for (int row = 0; row < FIGURE_SIZE; row++)
     {
-        free(figure->blocks[row]);
+        for (int col = 0; col < FIGURE_SIZE; col++)
+        {
+            figure->blocks[col][row] = figureTmp->blocks[col][row];
+        }
     }
-    figure->blocks = figureTmp->blocks;
-    free(figureTmp);
+
+    freeFigure(figureTmp);
 }
 
 // Выкинуть новую фигуру
@@ -157,6 +169,7 @@ void updateFigure(TetGame_t *game)
 {
     freeFigure(game->figure);
     game->figure = game->figureNext;
+
     game->figure->y = -5;
     game->figureNext = createRandomFigure();
 }
