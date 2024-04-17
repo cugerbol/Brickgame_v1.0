@@ -172,7 +172,7 @@ void frontend(TetGame_t *game, TetWindows_t *winTet)
         outputButtons(winTet->winButtons);
     }
 
-    if (game->gameStatus == Terminate)
+    if (game->gameStatus == GameOver)
     {
         outpuGameOver(winTet->winField, game);
     }

@@ -42,11 +42,9 @@ int main()
     init_pair(6, COLOR_MAGENTA, COLOR_MAGENTA);
 
     TetWindows_t *winTet = createWindows();
-
-    while (1) //(game->gameStatus != 100)
+    while (game->gameStatus != Terminate)
     {
         userAction(game);
-
         if (game->gameStatus != Pause)
         {
             updateCurrentState(game);
@@ -54,6 +52,9 @@ int main()
         usleep(2000);
         frontend(game, winTet);
     }
+    freeGame(game);
+
+    freeWindows(winTet);
     endwin();
     return 0;
 }
@@ -80,28 +81,24 @@ void userAction(TetGame_t *game)
         break;
 
     case 'q':
-        if (game->gameStatus == Terminate)
-            game->gameStatus = Terminate;
-        else
-            game->gameStatus = Terminate;
+        game->gameStatus = Terminate;
         break;
 
     case 'p':
         if (game->gameStatus == Pause)
             game->gameStatus = Start;
-        else if ((game->gameStatus != Terminate))
+        else if ((game->gameStatus != GameOver))
             game->gameStatus = Pause;
         break;
 
     case '+':
     case '=':
-        if (game->gameInfo->speed > 0 && game->gameInfo->speed < 10 && game->gameInfo->speed >= game->gameInfo->level)
+        if (game->gameInfo->speed > 0 && game->gameInfo->speed < 10)
             game->gameInfo->speed++;
         break;
-
     case '_':
     case '-':
-        if (game->gameInfo->speed > 1 && game->gameInfo->speed <= 10)
+        if (game->gameInfo->speed > 1 && game->gameInfo->speed <= 10 && game->gameInfo->speed >= game->gameInfo->level)
             game->gameInfo->speed--;
         break;
 

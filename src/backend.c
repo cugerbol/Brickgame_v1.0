@@ -269,7 +269,7 @@ int collisionFigure(TetGame_t *game)
                         result = 1;
 
                         if (fy + row == 0)
-                            game->gameStatus = Terminate;
+                            game->gameStatus = GameOver;
 
                         break;
                     }

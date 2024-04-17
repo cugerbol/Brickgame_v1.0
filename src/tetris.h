@@ -39,6 +39,7 @@ typedef enum
 {
     Start,
     Pause,
+    GameOver,
     Terminate,
     Left,
     Right,

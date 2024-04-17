@@ -20,6 +20,10 @@ void calculateTet(TetGame_t *game)
             placeFigure(game);
             game->gameInfo->score += eraseLines(game);
             updateFigure(game);
+            if (collisionFigure(game))
+            {
+                game->gameStatus = GameOver;
+            }
         }
     }
     else
@@ -61,7 +65,7 @@ void calculateTet(TetGame_t *game)
                 updateFigure(game);
                 if (collisionFigure(game))
                 {
-                    game->gameStatus = Terminate;
+                    game->gameStatus = GameOver;
                 }
             }
             break;
@@ -99,37 +103,3 @@ void initGame(TetGame_t *game)
 
     game->counterIter = 1;
 }
-
-// void userAction(TetGame_t *game)
-// {
-//     char action = getch();
-//     switch ((unsigned int)action)
-//     {
-//     case (unsigned int)KEY_RIGHT:
-//         game->action = Right;
-//         break;
-//     case (unsigned int)KEY_LEFT:
-//         game->action = Left;
-//         break;
-//     case (unsigned int)KEY_UP:
-//         game->action = Up;
-//         break;
-//     case (unsigned int)KEY_DOWN:
-//         game->action = Down;
-//         break;
-//     case (unsigned int)KEY_ENTER:
-//         game->action = Terminate;
-//         break;
-//     default:
-//         game->action = Action;
-//         break;
-//     }
-// }
-//  Start,
-//     Pause,
-//     Terminate,
-//     Left,
-//     Right,
-//     Up,
-//     Down,
-//     Action
