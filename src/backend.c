@@ -104,6 +104,7 @@ TetFigure_t *createRandomFigure()
             }
         }
     }
+    figure->color = (rn + rand()) % 4 + 3;
     fclose(file);
     return figure;
 }

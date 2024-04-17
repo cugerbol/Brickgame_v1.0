@@ -11,8 +11,10 @@ void userAction(TetGame_t *game);
 
 int main()
 {
-
     srand((unsigned)time(NULL));
+    TetGame_t *game = createGame();
+    initGame(game);
+
     initscr();
     keypad(stdscr, TRUE);
     nodelay(stdscr, TRUE);
@@ -21,20 +23,23 @@ int main()
     cbreak();
     curs_set(0);
 
+    if (!has_colors())
+    {
+        printw("Terminal does not support colors");
+        getch();
+        return -1;
+    }
+
     start_color();
 
-    init_pair(4, COLOR_WHITE, COLOR_WHITE);
-    init_pair(1, COLOR_RED, COLOR_RED);
+    init_pair(1, COLOR_WHITE, COLOR_WHITE);
     init_pair(2, COLOR_GREEN, COLOR_GREEN);
-    init_pair(3, COLOR_CYAN, COLOR_BLUE);
+    init_pair(3, COLOR_BLUE, COLOR_BLUE);
+    init_pair(4, COLOR_RED, COLOR_RED);
+    init_pair(5, COLOR_CYAN, COLOR_CYAN);
+    init_pair(6, COLOR_MAGENTA, COLOR_MAGENTA);
 
-    // init_pair(1, COLOR_YELLOW, COLOR_GREEN);
-    // init_pair(2, COLOR_CYAN, COLOR_BLUE);
-    // init_pair(3, COLOR_BLACK, COLOR_WHITE);
-    // init_pair(4, COLOR_RED, COLOR_MAGENTA);
-
-    TetGame_t *game = createGame();
-    initGame(game);
+    TetWindows_t *winTet = createWindows();
 
     while (1) //(game->gameStatus != 100)
     {
@@ -43,7 +48,7 @@ int main()
         if (game->gameStatus != Pause)
         {
             updateCurrentState(game);
-            frontend(game);
+            frontend(game, winTet);
         }
         usleep(2000);
 

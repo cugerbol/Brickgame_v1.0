@@ -20,11 +20,6 @@ void calculateTet(TetGame_t *game)
             placeFigure(game);
             game->gameInfo->score += eraseLines(game);
             updateFigure(game);
-
-            // if (collisionFigure(game))
-            // {
-            //     game->gameStatus = Terminate;
-            // }
         }
     }
     else
