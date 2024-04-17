@@ -30,10 +30,16 @@ void outputField(TetField_t *field, WINDOW *win);
 void cleanSymbols(WINDOW *win, int size_y, int size_x);
 
 // Выводит информацию о игре
-void ouputInfoGame(TetGame_t *game);
+void ouputInfoGame(TetGame_t *game, WINDOW *win);
+
+// Выводит окно кнопок
+void outputButtons(WINDOW *win);
 
 // Инициализирует окна
 TetWindows_t *createWindows();
+
+// Освободить память окон
+void freeWindows(TetWindows_t *winTet);
 
 // Вывод всех объектов игры
 void frontend(TetGame_t *game, TetWindows_t *winTet);

@@ -70,24 +70,30 @@ void userAction(TetGame_t *game)
     case KEY_UP:
         game->action = Up;
         break;
+
     case KEY_DOWN:
         game->action = Down;
         break;
+
     case KEY_LEFT:
         game->action = Left;
         break;
+
     case KEY_RIGHT:
         game->action = Right;
         break;
+
     case 'q':
         game->gameStatus = Terminate;
         break;
+
     case 'p':
         if (game->gameStatus == Pause)
             game->gameStatus = Start;
         else
             game->gameStatus = Pause;
         break;
+
     default:
         game->action = Action;
         break;

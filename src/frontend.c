@@ -66,8 +66,35 @@ void cleanSymbols(WINDOW *win, int size_y, int size_x)
     }
 }
 
+// Выводит информацию о игре
+void ouputInfoGame(TetGame_t *game, WINDOW *win)
+{
+    mvwprintw(win, 2, 2, "%s", "speed:");
+    mvwprintw(win, 2, 10, "%d", game->gameInfo->speed);
+
+    mvwprintw(win, 3, 2, "%s", "level:");
+    mvwprintw(win, 3, 10, "%d", game->gameInfo->level);
+
+    mvwprintw(win, 4, 2, "%s", "score:");
+    mvwprintw(win, 4, 10, "%d", game->gameInfo->score);
+
+    mvwprintw(win, 5, 2, "%s", "record:");
+    mvwprintw(win, 5, 10, "%d", game->gameInfo->record);
+}
+
+// Выводит окно кнопок
+void outputButtons(WINDOW *win)
+{
+    mvwprintw(win, 1, 3, "%s", "Quit(Q)");
+    mvwprintw(win, 3, 3, "%s", "Pause(P)");
+
+    mvwprintw(win, 1, 20, "%s", "Speed up(+)");
+    mvwprintw(win, 3, 20, "%s", "Speed down(-)");
+}
+
 // Инициализирует окна
-TetWindows_t *createWindows()
+TetWindows_t *
+createWindows()
 {
     TetWindows_t *winTet = (TetWindows_t *)malloc(sizeof(TetWindows_t));
     if (winTet == NULL)
@@ -104,21 +131,14 @@ TetWindows_t *createWindows()
     box(winTet->winFigure, 0, 0);
     box(winTet->winInfo, 0, 0);
     box(winTet->winButtons, 0, 0);
-
     return winTet;
 }
 
-// Выводит информацию о игре
-void ouputInfoGame(TetGame_t *game)
+// Освободить память окон
+void freeWindows(TetWindows_t *winTet)
 {
-    mvprintw(SHIFT_FIELD_Y + 8, SHIFT_FIELD_X + 33, "%s", "speed:");
-    mvprintw(SHIFT_FIELD_Y + 8, SHIFT_FIELD_X + 39, "%d", game->gameInfo->speed);
-
-    mvprintw(SHIFT_FIELD_Y + 9, SHIFT_FIELD_X + 33, "%s", "curr score:");
-    mvprintw(SHIFT_FIELD_Y + 9, SHIFT_FIELD_X + 45, "%d", game->gameInfo->score);
-
-    mvprintw(SHIFT_FIELD_Y + 10, SHIFT_FIELD_X + 33, "%s", "high score:");
-    mvprintw(SHIFT_FIELD_Y + 10, SHIFT_FIELD_X + 45, "%d", game->gameInfo->high_score);
+    if (winTet)
+        free(winTet);
 }
 
 // Вывод всех объектов игры
@@ -129,7 +149,8 @@ void frontend(TetGame_t *game, TetWindows_t *winTet)
 
     cleanSymbols(winTet->winFigure, FIGURE_SIZE, FIGURE_SIZE);
     outputFigure(game->figureNext, winTet->winFigure);
-    // ouputInfoGame(game);
+    ouputInfoGame(game, winTet->winInfo);
+    outputButtons(winTet->winButtons);
 
     wrefresh(winTet->winFigure);
     wrefresh(winTet->winField);

@@ -92,6 +92,8 @@ void initGame(TetGame_t *game)
     game->action = Start;
 
     game->gameInfo->level = 1;
+    game->gameInfo->record = 0;
+
     game->gameInfo->score = 0;
     game->gameInfo->speed = 5;
 

@@ -52,7 +52,7 @@ typedef struct GameInfo_t
 {
     int speed;
     int score;
-    int high_score;
+    int record;
     int level;
 
 } GameInfo_t;
