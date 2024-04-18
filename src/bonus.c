@@ -13,6 +13,18 @@
 //     return 0;
 // }
 
+// Увеличение уровня в зависимости от score
+void levelUp(TetGame_t *game)
+{
+    int sc = game->gameInfo->score;
+    game->gameInfo->level = 1 + sc / 600;
+
+    while (game->gameInfo->speed < game->gameInfo->level)
+    {
+        game->gameInfo->speed++;
+    }
+}
+
 // Переводит кол-во уничтоженных уровней (строк) в score
 int converterScore(int count_rows)
 {
@@ -36,21 +48,24 @@ int converterScore(int count_rows)
 int readDataBase()
 {
     int score = 0;
-    int d = 1;
     char fileName[] = "./database/database.txt";
     FILE *file = fopen(fileName, "r");
     if (file)
     {
-        char ch;
-        int elem = 0;
+        int ch;
         while ((ch = fgetc(file)) != EOF)
         {
-
-            int s = (int)(ch - '0') * d;
-            d = d * 10;
-            score = score + s;
+            if (ch >= '0' && ch <= '9')
+            {
+                score = score * 10 + (ch - '0');
+            }
+            else
+            {
+                break;
+            }
         }
     }
+
     fclose(file);
     return score;
 }
@@ -62,7 +77,8 @@ int writeDataBase(int score)
     FILE *file = fopen(fileName, "w");
     if (file)
     {
-        fputc(score, file);
+        // Используем fprintf для записи целого числа в файл
+        fprintf(file, "%d", score);
     }
 
     fclose(file);

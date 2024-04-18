@@ -3,6 +3,9 @@
 
 #include "tetris.h"
 
+// Увеличение уровня в зависимости от score
+void levelUp(TetGame_t *game);
+
 // Переводит кол-во уничтоженных уровней (строк) в score
 int converterScore(int count_rows);
 

@@ -21,6 +21,7 @@ void calculateTet(TetGame_t *game)
             placeFigure(game);
             int count_rows = eraseLines(game);
             game->gameInfo->score = game->gameInfo->score + converterScore(count_rows);
+            levelUp(game);
             updateFigure(game);
             if (collisionFigure(game))
             {
@@ -63,7 +64,9 @@ void calculateTet(TetGame_t *game)
             {
                 moveFigureUp(game->figure);
                 placeFigure(game);
-                game->gameInfo->score += eraseLines(game);
+                int count_rows = eraseLines(game);
+                game->gameInfo->score = game->gameInfo->score + converterScore(count_rows);
+                levelUp(game);
                 updateFigure(game);
                 if (collisionFigure(game))
                 {
@@ -84,6 +87,11 @@ void calculateTet(TetGame_t *game)
 TetGame_t *updateCurrentState(TetGame_t *game)
 {
     calculateTet(game);
+    if (game->gameInfo->score > game->gameInfo->record)
+    {
+        game->gameInfo->record = game->gameInfo->score;
+        writeDataBase(game->gameInfo->record);
+    }
     return game;
 }
 #endif
@@ -98,7 +106,7 @@ void initGame(TetGame_t *game)
     game->action = Start;
 
     game->gameInfo->level = 1;
-    game->gameInfo->record = 0;
+    game->gameInfo->record = readDataBase();
 
     game->gameInfo->score = 0;
     game->gameInfo->speed = 5;

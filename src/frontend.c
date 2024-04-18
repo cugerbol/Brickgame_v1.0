@@ -119,16 +119,16 @@ void cleanSymbols(WINDOW *win, int size_y, int size_x)
 void ouputInfoGame(TetGame_t *game, WINDOW *win)
 {
     mvwprintw(win, 2, 2, "%s", "speed:");
-    mvwprintw(win, 2, 10, "%d ", game->gameInfo->speed);
+    mvwprintw(win, 2, 10, "%d  ", game->gameInfo->speed);
 
     mvwprintw(win, 3, 2, "%s", "level:");
-    mvwprintw(win, 3, 10, "%d ", game->gameInfo->level);
+    mvwprintw(win, 3, 10, "%d  ", game->gameInfo->level);
 
     mvwprintw(win, 4, 2, "%s", "score:");
     mvwprintw(win, 5, 2, "%d  ", game->gameInfo->score);
 
     mvwprintw(win, 6, 2, "%s", "record:");
-    mvwprintw(win, 7, 2, "%d ", game->gameInfo->record);
+    mvwprintw(win, 7, 2, "%d  ", game->gameInfo->record);
 }
 
 // Выводит окно кнопок
