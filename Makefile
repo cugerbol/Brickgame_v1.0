@@ -14,6 +14,12 @@ $(TARGET):
 
 build: clean $(TARGET)
 
+
+db: clean
+	$(CC) $(CFLAGS) src/database.c 
+	./a.out	
+	
+
 check: build
 	leaks -atExit -- ./tetris
 

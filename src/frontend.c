@@ -125,10 +125,10 @@ void ouputInfoGame(TetGame_t *game, WINDOW *win)
     mvwprintw(win, 3, 10, "%d ", game->gameInfo->level);
 
     mvwprintw(win, 4, 2, "%s", "score:");
-    mvwprintw(win, 4, 10, "%d  ", game->gameInfo->score);
+    mvwprintw(win, 5, 2, "%d  ", game->gameInfo->score);
 
-    mvwprintw(win, 5, 2, "%s", "record:");
-    mvwprintw(win, 5, 10, "%d ", game->gameInfo->record);
+    mvwprintw(win, 6, 2, "%s", "record:");
+    mvwprintw(win, 7, 2, "%d ", game->gameInfo->record);
 }
 
 // Выводит окно кнопок

@@ -4,6 +4,7 @@
 #include "tetris.h"
 #include "backend.h"
 #include "fsm.h"
+#include "bonus.h"
 #include "ncurses.h"
 
 // Функция для просчета одной итерации
@@ -18,7 +19,8 @@ void calculateTet(TetGame_t *game)
         {
             moveFigureUp(game->figure);
             placeFigure(game);
-            game->gameInfo->score += eraseLines(game);
+            int count_rows = eraseLines(game);
+            game->gameInfo->score = game->gameInfo->score + converterScore(count_rows);
             updateFigure(game);
             if (collisionFigure(game))
             {
