@@ -3,7 +3,7 @@
 
 #include "frontend.h"
 #include "ncurses.h"
-#include "tetris.h"
+#include "../brick_game/tetris/tetris.h"
 
 // Инициализирует окна
 TetWindows_t *

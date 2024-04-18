@@ -1,7 +1,7 @@
 #ifndef FRONTEND_H
 #define FRONTEND_H
 
-#include "tetris.h"
+#include "../brick_game/tetris/tetris.h"
 #include <ncurses.h>
 
 #define WHITE 1

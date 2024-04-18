@@ -1,0 +1,12 @@
+#suite move
+
+#test moveUp
+
+TetFigure_t * figure = createRandomFigure();
+
+int y_start = figure->y = 1;
+int y_end = 2;
+moveDown(figure);
+
+
+freeFugure(figure);
