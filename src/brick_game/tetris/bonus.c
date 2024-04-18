@@ -4,15 +4,6 @@
 #include "tetris.h"
 #include "bonus.h"
 
-// int main()
-// {
-//     printf("%d\n", readDataBase());
-//     writeDataBase(250);
-//     printf("%d\n", readDataBase());
-
-//     return 0;
-// }
-
 // Увеличение уровня в зависимости от score
 void levelUp(TetGame_t *game)
 {
