@@ -84,9 +84,9 @@ void calculateTet(TetGame_t *game)
 }
 
 // Изменение состояний игры в зависимости от действий игрока
-void userAction(TetGame_t *game)
+void userAction(TetGame_t *game, int ch)
 {
-    int ch = getch();
+
     switch (ch)
     {
     case KEY_UP:

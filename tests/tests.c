@@ -12,7 +12,7 @@
 
 
 
-START_TEST(createField_1)
+START_TEST(createField_test_1)
 {
 
 TetField_t * field = createField();
@@ -21,7 +21,7 @@ freeField(field);
 }
 END_TEST
 
-START_TEST(createFigure_1)
+START_TEST(createFigure_test_1)
 {
 
 TetFigure_t * figure = createRandomFigure(0);
@@ -35,16 +35,18 @@ freeFigure(figure);
 }
 END_TEST
 
-START_TEST(createGame_1)
+START_TEST(createGame_test_1)
 {
 
 TetGame_t * game = createGame();
 ck_assert_ptr_nonnull(game);
 freeGame(game);
+
+
 }
 END_TEST
 
-START_TEST(moveDown_succes)
+START_TEST(moveDown_test_succes)
 {
 TetFigure_t * figure = createRandomFigure(0);
 figure->y = 1;
@@ -57,7 +59,7 @@ freeFigure(figure);
 }
 END_TEST
 
-START_TEST(moveLeft_succes)
+START_TEST(moveLeft_test_succes)
 {
 TetFigure_t * figure = createRandomFigure(0);
 figure->x = 5;
@@ -70,7 +72,7 @@ freeFigure(figure);
 }
 END_TEST
 
-START_TEST(moveRight_succes)
+START_TEST(moveRight_test_succes)
 {
 TetFigure_t * figure = createRandomFigure(0);
 figure->x = 5;
@@ -83,7 +85,7 @@ freeFigure(figure);
 }
 END_TEST
 
-START_TEST(moveUp_succes)
+START_TEST(moveUp_test_succes)
 {
 TetFigure_t * figure = createRandomFigure(0);
 figure->y = 5;
@@ -91,6 +93,77 @@ int y_end = 4;
 moveFigureUp(figure);
 ck_assert_int_eq(y_end, figure->y);
 freeFigure(figure);
+
+}
+END_TEST
+
+START_TEST(userAction_test_KEY_UP)
+{
+TetGame_t * game = initGame();
+game->figure->y = 0;
+game->figure->x = 0;
+int ch = KEY_UP;
+userAction(game,ch);
+ck_assert_int_eq(game->action , Up);
+freeGame(game);
+
+
+}
+END_TEST
+
+START_TEST(userAction_test_KEY_DOWN)
+{
+TetGame_t * game = initGame();
+game->figure->y = 0;
+game->figure->x = 0;
+int ch = KEY_DOWN;
+userAction(game,ch);
+ck_assert_int_eq(game->action , Down);
+freeGame(game);
+
+
+}
+END_TEST
+
+START_TEST(userAction_test_KEY_LEFT)
+{
+TetGame_t * game = initGame();
+game->figure->y = 0;
+game->figure->x = 0;
+int ch = KEY_LEFT;
+userAction(game,ch);
+ck_assert_int_eq(game->action , Left);
+freeGame(game);
+
+
+}
+END_TEST
+
+START_TEST(userAction_test_KEY_RIGHT)
+{
+TetGame_t * game = initGame();
+game->figure->y = 0;
+game->figure->x = 0;
+int ch = KEY_RIGHT;
+userAction(game,ch);
+ck_assert_int_eq(game->action , Right);
+freeGame(game);
+
+
+}
+END_TEST
+
+START_TEST(userAction_test_q)
+{
+TetGame_t * game = initGame();
+game->figure->y = 0;
+game->figure->x = 0;
+int ch =  'q';
+userAction(game,ch);
+ck_assert_int_eq( game->gameStatus , Terminate);
+freeGame(game);
+
+
 
 }
 END_TEST
@@ -105,24 +178,33 @@ int main(void)
     TCase *tc3_1 = tcase_create("game");
     Suite *s4 = suite_create("moveFigure");
     TCase *tc4_1 = tcase_create("moveFigure");
+    Suite *s5 = suite_create("userAction");
+    TCase *tc5_1 = tcase_create("userAction");
     SRunner *sr = srunner_create(s1);
     int nf;
 
     suite_add_tcase(s1, tc1_1);
-    tcase_add_test(tc1_1, createField_1);
+    tcase_add_test(tc1_1, createField_test_1);
     suite_add_tcase(s2, tc2_1);
-    tcase_add_test(tc2_1, createFigure_1);
+    tcase_add_test(tc2_1, createFigure_test_1);
     suite_add_tcase(s3, tc3_1);
-    tcase_add_test(tc3_1, createGame_1);
+    tcase_add_test(tc3_1, createGame_test_1);
     suite_add_tcase(s4, tc4_1);
-    tcase_add_test(tc4_1, moveDown_succes);
-    tcase_add_test(tc4_1, moveLeft_succes);
-    tcase_add_test(tc4_1, moveRight_succes);
-    tcase_add_test(tc4_1, moveUp_succes);
+    tcase_add_test(tc4_1, moveDown_test_succes);
+    tcase_add_test(tc4_1, moveLeft_test_succes);
+    tcase_add_test(tc4_1, moveRight_test_succes);
+    tcase_add_test(tc4_1, moveUp_test_succes);
+    suite_add_tcase(s5, tc5_1);
+    tcase_add_test(tc5_1, userAction_test_KEY_UP);
+    tcase_add_test(tc5_1, userAction_test_KEY_DOWN);
+    tcase_add_test(tc5_1, userAction_test_KEY_LEFT);
+    tcase_add_test(tc5_1, userAction_test_KEY_RIGHT);
+    tcase_add_test(tc5_1, userAction_test_q);
 
     srunner_add_suite(sr, s2);
     srunner_add_suite(sr, s3);
     srunner_add_suite(sr, s4);
+    srunner_add_suite(sr, s5);
 
     srunner_run_all(sr, CK_ENV);
     nf = srunner_ntests_failed(sr);

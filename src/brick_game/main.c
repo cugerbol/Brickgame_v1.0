@@ -24,7 +24,8 @@ int tetrisGame(TetWindows_t *winTet)
     TetGame_t *game = initGame();
     while (game->gameStatus != Terminate)
     {
-        userAction(game);
+        int ch = getch();
+        userAction(game, ch);
         if (game->gameStatus != Pause)
         {
             updateCurrentState(game);

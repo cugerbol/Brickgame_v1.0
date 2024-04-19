@@ -11,7 +11,7 @@ void calculateTet(TetGame_t *game);
 TetGame_t *updateCurrentState(TetGame_t *game);
 
 // Изменение состояний игры в зависимости от действий игрока
-void userAction(TetGame_t *game);
+void userAction(TetGame_t *game, int ch);
 
 // Инициализация игры
 TetGame_t *initGame();

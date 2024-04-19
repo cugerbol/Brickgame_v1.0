@@ -1,0 +1,53 @@
+# suite userAction
+
+# test userAction_test_KEY_UP
+TetGame_t * game = initGame();
+game->figure->y = 0;
+game->figure->x = 0;
+int ch = KEY_UP;
+userAction(game,ch);
+ck_assert_int_eq(game->action , Up);
+freeGame(game);
+
+
+# test userAction_test_KEY_DOWN
+TetGame_t * game = initGame();
+game->figure->y = 0;
+game->figure->x = 0;
+int ch = KEY_DOWN;
+userAction(game,ch);
+ck_assert_int_eq(game->action , Down);
+freeGame(game);
+
+
+# test userAction_test_KEY_LEFT
+TetGame_t * game = initGame();
+game->figure->y = 0;
+game->figure->x = 0;
+int ch = KEY_LEFT;
+userAction(game,ch);
+ck_assert_int_eq(game->action , Left);
+freeGame(game);
+
+
+# test userAction_test_KEY_RIGHT
+TetGame_t * game = initGame();
+game->figure->y = 0;
+game->figure->x = 0;
+int ch = KEY_RIGHT;
+userAction(game,ch);
+ck_assert_int_eq(game->action , Right);
+freeGame(game);
+
+
+# test userAction_test_q
+TetGame_t * game = initGame();
+game->figure->y = 0;
+game->figure->x = 0;
+int ch =  'q';
+userAction(game,ch);
+ck_assert_int_eq( game->gameStatus , Terminate);
+freeGame(game);
+
+
+
