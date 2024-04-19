@@ -1,0 +1,95 @@
+# suite calculateTet
+
+
+# test calculateTet_test_counterIter_is_full
+TetGame_t * game = initGame();
+game->counterIter = COUNT_ITERATION * 15 / game->gameInfo->speed;
+calculateTet(game);
+ck_assert_int_eq(game->counterIter , 0);
+freeGame(game);
+
+
+# test calculateTet_test_Right_success_1
+TetGame_t * game = initGame();
+game->figure->x = 2;
+game->figure->y= 2;
+game->action = Right;
+calculateTet(game);
+int x_end = 3;
+ck_assert_int_eq(game->figure->x , x_end);
+freeGame(game);
+
+
+# test calculateTet_test_Right_success_2
+TetGame_t * game = initGame();
+free(game->figure);
+game->figure = createRandomFigure(1);
+game->figure->x = WIDTH_FIELD - 5;
+game->figure->y= 2;
+game->action = Right;
+calculateTet(game);
+int x_end = WIDTH_FIELD - 4;
+ck_assert_int_eq(game->figure->x , x_end);
+freeGame(game);
+
+
+# test calculateTet_test_Right_unsuccess_1
+TetGame_t * game = initGame();
+game->figure->x = WIDTH_FIELD;
+game->figure->y= 2;
+game->action = Right;
+calculateTet(game);
+int x_end = WIDTH_FIELD;
+ck_assert_int_eq(game->figure->x , x_end);
+freeGame(game);
+
+
+# test calculateTet_test_Left_success_1
+TetGame_t * game = initGame();
+game->figure->x = 2;
+game->figure->y= 2;
+game->action = Left;
+calculateTet(game);
+int x_end = 1;
+ck_assert_int_eq(game->figure->x , x_end);
+freeGame(game);
+
+
+# test calculateTet_test_Left_success_2
+TetGame_t * game = initGame();
+free(game->figure);
+game->figure = createRandomFigure(1);
+game->figure->x = 0;
+game->figure->y= 2;
+game->action = Left;
+calculateTet(game);
+int x_end = -1;
+ck_assert_int_eq(game->figure->x , x_end);
+freeGame(game);
+
+
+# test calculateTet_test_Left_unsuccess_1
+TetGame_t * game = initGame();
+free(game->figure);
+game->figure = createRandomFigure(1);
+game->figure->x = -1;
+game->figure->y= 2;
+game->action = Left;
+calculateTet(game);
+int x_end = -1;
+ck_assert_int_eq(game->figure->x , x_end);
+freeGame(game);
+
+
+# test calculateTet_test_Up_success_1
+TetGame_t * game = initGame();
+free(game->figure);
+game->figure = createRandomFigure(1);
+game->figure->y= 5;
+game->action = Up;
+calculateTet(game);
+int ** blocks = game->figure->blocks;
+int sumBLocks = blocks[1][2] + blocks[2][1] +
+            blocks[2][2] + blocks[3][2];
+ck_assert_int_eq(sumBLocks , 4);
+freeGame(game);

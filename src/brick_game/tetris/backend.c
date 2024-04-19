@@ -172,6 +172,7 @@ void updateFigure(TetGame_t *game)
 {
     freeFigure(game->figure);
     game->figure = game->figureNext;
+    game->figure->x = FIGURE_START_X;
 
     game->figure->y = -5;
     game->figureNext = createRandomFigure(0);

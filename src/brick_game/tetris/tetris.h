@@ -11,10 +11,12 @@
 #define WIDTH_FIELD 10
 
 #define FIGURE_START_Y 0
+#define FIGURE_START_X WIDTH_FIELD / 2 - 3;
 #define SHIFT_FIELD_X 5
 #define SHIFT_FIELD_Y 5
 
 #define COUNT_ITERATION 30
+#define START_SPEED 1
 
 typedef struct TetFigure_t
 {

@@ -117,7 +117,7 @@ void userAction(TetGame_t *game, int ch)
         break;
     case '_':
     case '-':
-        if (game->gameInfo->speed > 1 && game->gameInfo->speed <= 10 && game->gameInfo->speed >= game->gameInfo->level)
+        if (game->gameInfo->speed > 1 && game->gameInfo->speed <= 10 && game->gameInfo->speed > game->gameInfo->level)
             game->gameInfo->speed--;
         break;
 
@@ -148,6 +148,8 @@ TetGame_t *initGame()
     TetGame_t *game = createGame();
 
     game->figure = createRandomFigure(0);
+    game->figure->x = FIGURE_START_X;
+
     game->figureNext = createRandomFigure(0);
     game->field = createField();
 
@@ -157,7 +159,7 @@ TetGame_t *initGame()
     game->gameInfo->record = readDataBase();
 
     game->gameInfo->score = 0;
-    game->gameInfo->speed = 5;
+    game->gameInfo->speed = START_SPEED;
 
     game->counterIter = 1;
 
