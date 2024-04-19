@@ -22,7 +22,7 @@ TetGame_t *createGame();
 void freeGame(TetGame_t *game);
 
 // Создать фигуру из паттернов
-TetFigure_t *createRandomFigure();
+TetFigure_t *createRandomFigure(int number);
 
 // Движение фигуры по Y вниз
 void moveFigureDown(TetFigure_t *figure);

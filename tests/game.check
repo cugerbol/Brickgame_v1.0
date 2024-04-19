@@ -1,0 +1,7 @@
+#suite game
+
+#test createGame_test_1
+
+TetGame_t * game = createGame();
+ck_assert_ptr_nonnull(game);
+freeGame(game);

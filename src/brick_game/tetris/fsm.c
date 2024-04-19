@@ -147,8 +147,8 @@ TetGame_t *initGame()
 
     TetGame_t *game = createGame();
 
-    game->figure = createRandomFigure();
-    game->figureNext = createRandomFigure();
+    game->figure = createRandomFigure(0);
+    game->figureNext = createRandomFigure(0);
     game->field = createField();
 
     game->action = Start;

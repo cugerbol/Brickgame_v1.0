@@ -1,0 +1,12 @@
+#suite figure
+
+#test createFigure_test_1
+
+TetFigure_t * figure = createRandomFigure(0);
+ck_assert_ptr_nonnull(figure);
+
+freeFigure(figure);
+
+
+
+

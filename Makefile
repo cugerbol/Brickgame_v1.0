@@ -7,6 +7,7 @@ SRC = src/brick_game/tetris/*.c
 GUI = src/gui/*.c
 OBJ = *.o
 TEST = ./tests/tests.c
+TEST_PATH = ./tests/
 MAIN= src/brick_game/main.c
 
 OS = $(shell uname)
@@ -19,13 +20,15 @@ else
 endif
 
 all: clean install
-	./tetris
+	./$(TARGET) 
+
 
 create_tests:
 	checkmk clean_mode=1 $(TEST_PATH)*.check >$(TEST_PATH)tests.c 
 
-gcov_report: test
-	$(CC) $(CFLAGS) $(TEST_FLAGS) -fprofile-arcs -ftest-coverage $(SRC) $(TEST) -o test -lncurses $(CHECK_FLAGS) $(GCOVFLAGS)
+
+gcov_report: clean test
+	$(CC) $(CFLAGS) $(TEST_FLAGS) -fprofile-arcs -ftest-coverage $(OBJ) $(TEST) -o test -lncurses $(CHECK_FLAGS) $(GCOVFLAGS)
 	lcov -t test -o rep.info -c -d .
 	genhtml rep.info --output-directory report
 	genhtml -o report rep.info 
@@ -33,29 +36,39 @@ gcov_report: test
 	rm -f *.gcno *.info *.gcda 
 
 
-test: backend.o frontend.o
+
+test: clean  backend.o create_tests
 	$(CC) $(CFLAGS) $(TEST_FLAGS) -fprofile-arcs -ftest-coverage $(SRC) $(TEST) -o test -lncurses $(CHECK_FLAGS) $(GCOVFLAGS)
 	./test
+	
 
-install: build
+
+
+install: backend.o frontend.o
 	$(CC) $(CFLAGS) -o $(TARGET) *.o $(MAIN) -lncurses
 	rm -rf *.o
 
-build: backend.o frontend.o
-	
 
 
 backend.a: backend.o
 	ar rcs $(TARGET).a *.o
 	ranlib $(TARGET).a
 
+
 backend.o: 
 	$(CC) $(CFLAGS) -c $(SRC)
+
 
 frontend.o: 
 	$(CC) $(CFLAGS) -c $(GUI)
 
+
 uninstall: clean
+
+
+check: install
+	leaks -atExit -- ./$(TARGET) 
+
 
 clean:
 	rm -f $(TARGET) $(OBJ) a.out
@@ -64,8 +77,5 @@ clean:
 	rm -f test 
 	rm -rf test.dSYM
 	
-
-
-
 
 .PHONY: backend.o frontend.o

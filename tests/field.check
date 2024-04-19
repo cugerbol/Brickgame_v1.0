@@ -1,0 +1,7 @@
+#suite field
+
+# test createField_test_1
+
+TetField_t * field = createField();
+ck_assert_ptr_nonnull(field);
+freeField(field);

@@ -92,12 +92,15 @@ void freeGame(TetGame_t *game)
 }
 
 // Создать фигуру из паттернов
-TetFigure_t *createRandomFigure()
+TetFigure_t *createRandomFigure(int number)
 {
     TetFigure_t *figure = createFigure();
-    int rn = rand() % 7 + 1;
+
+    if (number == 0)
+        number = rand() % 7 + 1;
+
     char fileName[20];
-    sprintf(fileName, "./templates/%d.txt", rn);
+    sprintf(fileName, "./templates/%d.txt", number);
     FILE *file = fopen(fileName, "r");
     if (file)
     {
@@ -113,7 +116,7 @@ TetFigure_t *createRandomFigure()
             }
         }
     }
-    figure->color = (rn + rand()) % 4 + 3;
+    figure->color = (number + rand()) % 4 + 3;
     fclose(file);
     return figure;
 }
@@ -171,7 +174,7 @@ void updateFigure(TetGame_t *game)
     game->figure = game->figureNext;
 
     game->figure->y = -5;
-    game->figureNext = createRandomFigure();
+    game->figureNext = createRandomFigure(0);
 }
 
 // Проверяет находится ли блок в пределах игрового поля
