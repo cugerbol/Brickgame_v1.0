@@ -5,18 +5,17 @@
 
 #include <check.h>
 
-
 START_TEST(moveUp)
 {
 
-TetFigure_t * figure = createRandomFigure();
+    TetFigure_t *figure = createRandomFigure();
 
-int y_start = figure->y = 1;
-int y_end = 2;
-moveDown(figure);
+    int y_start = figure->y = 1;
+    int y_end = 2;
 
-
-freeFugure(figure);
+    moveDown(figure);
+    ck_assert_int_eq(y_end, 2);
+    freeFugure(figure);
 }
 END_TEST
 

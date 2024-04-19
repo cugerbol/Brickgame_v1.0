@@ -47,4 +47,7 @@ void outpuGameOver(WINDOW *win, TetGame_t *game);
 // Вывод всех объектов игры
 void frontend(TetGame_t *game, TetWindows_t *winTet);
 
+// Главная функция отвечающая ща GUI
+TetWindows_t *tetrisGUI();
+
 #endif

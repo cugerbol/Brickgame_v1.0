@@ -6,6 +6,7 @@
 #include "fsm.h"
 #include "bonus.h"
 #include "ncurses.h"
+#include "../../gui/frontend.h"
 
 // Функция для просчета одной итерации
 void calculateTet(TetGame_t *game)
@@ -83,6 +84,50 @@ void calculateTet(TetGame_t *game)
     }
 }
 
+// Изменение состояний игры в зависимости от действий игрока
+void userAction(TetGame_t *game)
+{
+    int ch = getch();
+    switch (ch)
+    {
+    case KEY_UP:
+        game->action = Up;
+        break;
+    case KEY_DOWN:
+        game->action = Down;
+        break;
+    case KEY_LEFT:
+        game->action = Left;
+        break;
+    case KEY_RIGHT:
+        game->action = Right;
+        break;
+    case 'q':
+        game->gameStatus = Terminate;
+        break;
+    case 'p':
+        if (game->gameStatus == Pause)
+            game->gameStatus = Start;
+        else if ((game->gameStatus != GameOver))
+            game->gameStatus = Pause;
+        break;
+    case '+':
+    case '=':
+        if (game->gameInfo->speed > 0 && game->gameInfo->speed < 10)
+            game->gameInfo->speed++;
+        break;
+    case '_':
+    case '-':
+        if (game->gameInfo->speed > 1 && game->gameInfo->speed <= 10 && game->gameInfo->speed >= game->gameInfo->level)
+            game->gameInfo->speed--;
+        break;
+
+    default:
+        game->action = Action;
+        break;
+    }
+}
+
 // Обновляет текущий состояние игры
 TetGame_t *updateCurrentState(TetGame_t *game)
 {
@@ -97,8 +142,12 @@ TetGame_t *updateCurrentState(TetGame_t *game)
 #endif
 
 // Инициализировать новую игру
-void initGame(TetGame_t *game)
+TetGame_t *initGame()
 {
+    srand((unsigned)time(NULL));
+
+    TetGame_t *game = createGame();
+
     game->figure = createRandomFigure();
     game->figureNext = createRandomFigure();
     game->field = createField();
@@ -112,4 +161,31 @@ void initGame(TetGame_t *game)
     game->gameInfo->speed = 5;
 
     game->counterIter = 1;
+
+    return game;
+}
+
+// Главная функция отвечающая за игру
+int tetrisGame(TetWindows_t *winTet)
+{
+    TetGame_t *game = initGame();
+    while (game->gameStatus != Terminate)
+    {
+        userAction(game);
+        if (game->gameStatus != Pause)
+        {
+            updateCurrentState(game);
+        }
+        usleep(2000);
+        if (winTet)
+            frontend(game, winTet);
+    }
+    freeGame(game);
+    if (winTet)
+    {
+        freeWindows(winTet);
+        endwin();
+    }
+
+    return 0;
 }

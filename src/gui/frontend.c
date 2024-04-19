@@ -182,4 +182,27 @@ void frontend(TetGame_t *game, TetWindows_t *winTet)
     wrefresh(winTet->winInfo);
     wrefresh(winTet->winButtons);
 }
+
+// Главная функция отвечающая ща GUI
+TetWindows_t *tetrisGUI()
+{
+    initscr();
+    keypad(stdscr, TRUE);
+    nodelay(stdscr, TRUE);
+    raw();
+    noecho();
+    cbreak();
+    curs_set(0);
+
+    start_color();
+
+    init_pair(1, COLOR_WHITE, COLOR_WHITE);
+    init_pair(2, COLOR_GREEN, COLOR_GREEN);
+    init_pair(3, COLOR_BLUE, COLOR_BLUE);
+    init_pair(4, COLOR_RED, COLOR_RED);
+    init_pair(5, COLOR_CYAN, COLOR_CYAN);
+    init_pair(6, COLOR_MAGENTA, COLOR_MAGENTA);
+    TetWindows_t *winTet = createWindows();
+    return winTet;
+}
 #endif
