@@ -1,0 +1,6 @@
+#include "../src/brick_game/tetris/tetris.h"
+#include "../src/brick_game/tetris/backend.h"
+#include "../src/brick_game/tetris/fsm.h"
+#include "../src/brick_game/tetris/bonus.h"
+
+

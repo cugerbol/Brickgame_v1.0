@@ -6,7 +6,9 @@ TetFigure_t * figure = createRandomFigure();
 
 int y_start = figure->y = 1;
 int y_end = 2;
-moveDown(figure);
+ck_assert_int_eq(y_end, 2);
+
+moveFigureDown(figure);
 
 
-freeFugure(figure);
+freeFigure(figure);

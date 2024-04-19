@@ -16,7 +16,4 @@ void userAction(TetGame_t *game);
 // Инициализация игры
 TetGame_t *initGame();
 
-// Главная функция отвечающая за игру
-int tetrisGame(TetWindows_t *winTet);
-
 #endif

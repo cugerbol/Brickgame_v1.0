@@ -6,7 +6,6 @@
 #include "fsm.h"
 #include "bonus.h"
 #include "ncurses.h"
-#include "../../gui/frontend.h"
 
 // Функция для просчета одной итерации
 void calculateTet(TetGame_t *game)
@@ -163,29 +162,4 @@ TetGame_t *initGame()
     game->counterIter = 1;
 
     return game;
-}
-
-// Главная функция отвечающая за игру
-int tetrisGame(TetWindows_t *winTet)
-{
-    TetGame_t *game = initGame();
-    while (game->gameStatus != Terminate)
-    {
-        userAction(game);
-        if (game->gameStatus != Pause)
-        {
-            updateCurrentState(game);
-        }
-        usleep(2000);
-        if (winTet)
-            frontend(game, winTet);
-    }
-    freeGame(game);
-    if (winTet)
-    {
-        freeWindows(winTet);
-        endwin();
-    }
-
-    return 0;
 }
