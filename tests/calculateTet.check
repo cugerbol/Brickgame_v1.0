@@ -93,3 +93,35 @@ int sumBLocks = blocks[1][2] + blocks[2][1] +
             blocks[2][2] + blocks[3][2];
 ck_assert_int_eq(sumBLocks , 4);
 freeGame(game);
+
+
+# test calculateTet_test_Down_success_1
+TetGame_t * game = initGame();
+free(game->figure);
+game->figure = createRandomFigure(2);
+game->figure->y= HEIGHT_FIELD - 3;
+game->action = Down;
+calculateTet(game);
+int ** blocks = game->field->blocks;
+int sumBLocks = 0;
+for (int i = 0; i < WIDTH_FIELD; i++){
+    sumBLocks += blocks[HEIGHT_FIELD - 1][i];
+}
+ck_assert_int_eq(sumBLocks , 4);
+freeGame(game);
+
+
+# test calculateTet_test_Down_success_2
+TetGame_t * game = initGame();
+free(game->figure);
+game->figure = createRandomFigure(2);
+game->figure->y= HEIGHT_FIELD - 3;
+game->counterIter = COUNT_ITERATION * 15 / game->gameInfo->speed;
+calculateTet(game);
+int ** blocks = game->field->blocks;
+int sumBLocks = 0;
+for (int i = 0; i < WIDTH_FIELD; i++){
+    sumBLocks += blocks[HEIGHT_FIELD - 1][i];
+}
+ck_assert_int_eq(sumBLocks , 4);
+freeGame(game);

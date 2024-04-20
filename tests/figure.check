@@ -1,12 +1,30 @@
 #suite figure
 
 #test createFigure_test_1
-
 TetFigure_t * figure = createRandomFigure(0);
 ck_assert_ptr_nonnull(figure);
-
 freeFigure(figure);
 
 
+#test updateFigure_test_1
+TetGame_t * game = initGame();
+updateFigure(game);
+int y_start = -5;
+ck_assert_ptr_nonnull(game->figure);
+ck_assert_int_eq(game->figure->y , y_start);
+freeGame(game);
 
 
+# test placeFigure_test_1
+TetGame_t * game = initGame();
+freeFigure(game->figure);
+game->figure = createRandomFigure(2);
+game->figure->y = HEIGHT_FIELD - 3;
+placeFigure(game);
+int sumBLocks = 0;
+for (int i = 0; i < WIDTH_FIELD; i++){
+    
+    sumBLocks += game->field->blocks[HEIGHT_FIELD - 1][i];
+}
+ck_assert_int_eq(sumBLocks, 4);
+freeGame(game);

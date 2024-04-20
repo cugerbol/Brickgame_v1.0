@@ -1,0 +1,41 @@
+#suite bonus
+
+# test write_read_test
+int score_start = readDataBase();
+int score = score_start + 200;
+writeDataBase(score);
+int score_new = readDataBase();
+ck_assert_int_eq(score_new , score);
+
+
+# test levelUp_test
+TetGame_t * game = initGame();
+game->gameInfo->speed = 1;
+game->gameInfo->score= 600;
+levelUp(game);
+int new_speed = 2;
+ck_assert_int_eq(game->gameInfo->speed , new_speed);
+
+
+# test converterScore_1_row 
+int count_rows = 1;
+int score = converterScore(count_rows);
+ck_assert_int_eq(score, 100);
+
+# test converterScore_2_row 
+int count_rows = 2;
+int score = converterScore(count_rows);
+ck_assert_int_eq(score, 300);
+
+# test converterScore_3_row 
+int count_rows = 3;
+int score = converterScore(count_rows);
+ck_assert_int_eq(score, 700);
+
+# test converterScore_4_row 
+int count_rows = 4;
+int score = converterScore(count_rows);
+ck_assert_int_eq(score, 1500);
+
+
+
